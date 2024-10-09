@@ -26,6 +26,8 @@ source ~/.zshrc
 
 ## Installation of the custom theme
 
+![Custom Theme Screenshot](./Pictures/Theme_screenshot.png)
+
 1. Install oh-my-zsh from the official git repository:
 ```sh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -44,7 +46,7 @@ cd nerd-fonts
 
 - **Aliases**: Shortcuts for common commands.
 - **Functions**: Custom functions to automate tasks.
-- **Themes**: Custom themes to personalize the terminal appearance.
+- **Theme**: Custom theme to personalize the terminal appearance.
 
 ## Contributing
 
