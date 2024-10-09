@@ -182,6 +182,12 @@ prompt_clock() {
     local LC_ALL="" LC_CTYPE="en_US.UTF-16"
     CLOCK_ICON=$'\U23F0'
   }
+  
+  TRAPALRM() {
+      zle reset-prompt
+  }
+  TMOUT=1
+
   prompt_segment 238 $CURRENT_FG $CLOCK_ICON' %*'
 }
 
