@@ -91,6 +91,20 @@ source $ZSH/oh-my-zsh.sh
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
 
+# For Python
+export PATH=$HOME/miniforge/bin:$PATH
+
+#-------- Ascii art generator --------#
+# Count the number of art pieces
+num_art_pieces=$(awk 'BEGIN{RS="THISISATOKEN"} {count++} END{print count}' ".bash_ascii.txt")
+
+# Generate a random index to select an art piece (awk index starts from 1)
+random_index=$(( (RANDOM % num_art_pieces) + 1 ))
+echo "$random_index"
+
+# Extract and display the selected art piece
+awk -v idx="$random_index" 'BEGIN{RS="THISISATOKEN"} NR==idx {print; exit}' ".bash_ascii.txt"
+
 # Set personal aliases, overriding those provided by Oh My Zsh libs,
 # plugins, and themes. Aliases can be placed here, though Oh My Zsh
 # users are encouraged to define aliases within a top-level file in
@@ -102,3 +116,5 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias zotero='/home/csantos/Downloads/Zotero-6.0.27_linux-x86_64/Zotero_linux-x86_64/zotero &'
+alias r='source activate r'
