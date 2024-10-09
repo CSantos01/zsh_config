@@ -36,8 +36,9 @@ CURRENT_FG=015
 
 # Special Powerline characters
 () {
-  local LC_ALL="" LC_CTYPE="en_US.UTF-8"
+  local LC_ALL="" LC_CTYPE="en_US.UTF-16"
   SEGMENT_SEPARATOR=$'\ue0b0'
+  USER_ICON=$'\Uf0004'
 }
 
 # Begin a segment
@@ -73,7 +74,7 @@ prompt_end() {
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
   if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    prompt_segment 092 default "%(!.%{%F{yellow}%}.)%n@%m"
+    prompt_segment 092 default $USER_ICON"%(!.%{%F{yellow}%}.) %n@%m"
   fi
 }
 
@@ -87,7 +88,7 @@ prompt_dir() {
   if [[ "$PWD" == "$HOME" ]]; then
       FOLDER_ICON=$'\Uf10b5'
   fi
-  prompt_segment 062 $CURRENT_FG $FOLDER_ICON'%~'
+  prompt_segment 062 $CURRENT_FG $FOLDER_ICON' %~'
 }
 
 # Virtualenv: current working virtualenv
@@ -131,7 +132,7 @@ prompt_git() {
     ref="◈ $(command git describe --exact-match --tags HEAD 2> /dev/null)" || \
     ref="➦ $(command git rev-parse --short HEAD 2> /dev/null)"
     if [[ -n $dirty ]]; then
-      prompt_segment yellow black
+      prompt_segment 214 $CURRENT_FG
     else
       prompt_segment 031 $CURRENT_FG
     fi
