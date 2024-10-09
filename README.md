@@ -33,6 +33,13 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 
 2. Put the custom theme in the `~/.oh-my-zsh/custom/themes` directory
 
+3. Install [Nerd-fonts](https://github.com/ryanoasis/nerd-fonts):
+```sh
+git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git
+cd nerd-fonts
+./install.sh
+```
+
 ## Features
 
 - **Aliases**: Shortcuts for common commands.
