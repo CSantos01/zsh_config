@@ -60,7 +60,11 @@ prompt_segment() {
 # End the prompt, closing any open segments
 prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
-    echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR"
+    () {
+      local LC_ALL="" LC_CTYPE="en_US.UTF-16"
+      ARROW_ICON=$'\Uf0734'
+    }
+    echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR \n %{%F{white}%}$ARROW_ICON"
   else
     echo -n "%{%k%}"
   fi
@@ -171,6 +175,18 @@ prompt_git() {
   fi
 }
 
+# Clock: current time in HH:MM:SS format
+prompt_clock() {
+  local CLOCK_ICON
+  () {
+    local LC_ALL="" LC_CTYPE="en_US.UTF-16"
+    CLOCK_ICON=$'\U23F0'
+  }
+  prompt_segment 238 $CURRENT_FG $CLOCK_ICON' %*'
+}
+
+prompt_clock
+
 ## Main prompt
 build_prompt() {
   RETVAL=$?
@@ -182,4 +198,10 @@ build_prompt() {
   prompt_end
 }
 
+# Right prompt (RPROMPT)
+build_rprompt() {
+  prompt_clock
+}
+
 PROMPT='%{%f%b%k%}$(build_prompt) '
+RPROMPT='%{%f%b%k%}$(build_rprompt) '
