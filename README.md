@@ -1,6 +1,30 @@
 # zsh_config
 
+![Custom Theme Screenshot](./Pictures/Theme.gif)
+
 This repository contains custom configurations for the Zsh (Z Shell) environment and [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh/tree/master) customization. These configurations aim to enhance the user experience by providing useful aliases, functions, and theme.
+
+## Preliminary steps
+
+**Install Zsh**:
+```sh
+wget -O zsh.tar.xz https://sourceforge.net/projects/zsh/files/latest/download
+mkdir zsh && unxz zsh.tar.xz && tar -xvf zsh.tar -C zsh --strip-components 1
+cd zsh
+./configure
+make
+make install
+```
+
+**Set Zsh as the default shell**:
+```sh
+chsh -s $(which zsh)
+```
+
+**Install oh-my-zsh**:
+```sh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
 
 ## Installation of the .zshrc file
 
@@ -26,16 +50,9 @@ source ~/.zshrc
 
 ## Installation of the custom theme
 
-![Custom Theme Screenshot](./Pictures/Theme_screenshot.png)
+1. Put the custom theme in the `~/.oh-my-zsh/custom/themes` directory
 
-1. Install oh-my-zsh from the official git repository:
-```sh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-```
-
-2. Put the custom theme in the `~/.oh-my-zsh/custom/themes` directory
-
-(*Optional*) 3. Install [Nerd-fonts](https://github.com/ryanoasis/nerd-fonts):
+2. (*Optional*)  Install [Nerd-fonts](https://github.com/ryanoasis/nerd-fonts):
 ```sh
 git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git
 cd nerd-fonts
