@@ -11,15 +11,6 @@
 # uses changed in 2012, and older versions will display incorrectly,
 # in confusing ways.
 #
-# In addition, I recommend the
-# [Solarized theme](https://github.com/altercation/solarized/) and, if you're
-# using it on Mac OS X, [iTerm 2](https://iterm2.com/) over Terminal.app -
-# it has significantly better color fidelity.
-#
-# If using with "light" variant of the Solarized color schema, set
-# SOLARIZED_THEME variable to "light". If you don't specify, we'll assume
-# you're using the "dark" variant.
-#
 # # Goals
 #
 # The aim of this theme is to only show you *relevant* information. Like most
@@ -37,7 +28,8 @@ CURRENT_FG=015
 # Special Powerline characters
 () {
   local LC_ALL="" LC_CTYPE="en_US.UTF-16"
-  SEGMENT_SEPARATOR=$'\ue0b0'
+  SEGMENT_SEPARATOR_RIGHT=$'\ue0c6'
+  SEGMENT_SEPARATOR_LEFT=$'\ue0c7'
   USER_ICON=$'\Uf0004'
 }
 
@@ -49,11 +41,19 @@ prompt_segment() {
   [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
   [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
   if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
-    echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR%{$fg%} "
+    echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR_RIGHT%{$fg%} "
   else
     echo -n "%{$bg%}%{$fg%} "
   fi
   CURRENT_BG=$1
+  [[ -n $3 ]] && echo -n $3
+}
+
+prompt_segment_left() {
+  local bg fg
+  [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
+  [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
+  echo -n "%{%F{$1}%}$SEGMENT_SEPARATOR_LEFT%{$bg$fg%}"
   [[ -n $3 ]] && echo -n $3
 }
 
@@ -62,9 +62,9 @@ prompt_end() {
   if [[ -n $CURRENT_BG ]]; then
     () {
       local LC_ALL="" LC_CTYPE="en_US.UTF-16"
-      ARROW_ICON=$'\Uf0734'
+      ARROW_ICON=$'\Uf0734' #\ue0b1
     }
-    echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR \n %{%F{white}%}$ARROW_ICON"
+    echo -n " %{%k%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR_RIGHT \n %{%F{white}%}$ARROW_ICON"
   else
     echo -n "%{%k%}"
   fi
@@ -183,15 +183,14 @@ prompt_clock() {
     CLOCK_ICON=$'\U23F0'
   }
   
+  # Creates a real time clock
   TRAPALRM() {
       zle reset-prompt
   }
   TMOUT=1
 
-  prompt_segment 238 $CURRENT_FG $CLOCK_ICON' %*'
+  prompt_segment_left 162 $CURRENT_FG $CLOCK_ICON' %*'
 }
-
-prompt_clock
 
 ## Main prompt
 build_prompt() {
@@ -203,11 +202,10 @@ build_prompt() {
   prompt_git
   prompt_end
 }
+PROMPT='%{%f%b%k%}$(build_prompt) '
 
 # Right prompt (RPROMPT)
 build_rprompt() {
   prompt_clock
 }
-
-PROMPT='%{%f%b%k%}$(build_prompt) '
 RPROMPT='%{%f%b%k%}$(build_rprompt) '
