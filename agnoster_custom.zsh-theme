@@ -183,14 +183,14 @@ prompt_clock() {
     CLOCK_ICON=$'\U23F0'
   }
   
-  # Creates a real time clock
-  TRAPALRM() {
-      zle reset-prompt
-  }
-  TMOUT=1
-
   prompt_segment_left 162 $CURRENT_FG $CLOCK_ICON' %*'
 }
+
+# Set up real-time clock update
+TRAPALRM() {
+  zle reset-prompt
+}
+TMOUT=1
 
 ## Main prompt
 build_prompt() {
