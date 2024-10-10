@@ -50,7 +50,7 @@ source ~/.zshrc
 
 ## Installation of the custom theme
 
-1. Put the custom theme in the `~/.oh-my-zsh/custom/themes` directory
+1. Put the custom theme in the `~/.oh-my-zsh/custom/themes` directory.
 
 2. (*Optional*)  Install [Nerd-fonts](https://github.com/ryanoasis/nerd-fonts):
 ```sh
@@ -64,6 +64,10 @@ cd nerd-fonts
 - **Aliases**: Shortcuts for common commands.
 - **Functions**: Custom functions to automate tasks.
 - **Theme**: Custom theme to personalize the terminal appearance.
+
+## Customization
+
+- Colors are taken from the `spectrum_ls` command.
 
 ## Contributing
 
