@@ -200,7 +200,7 @@ prompt_battery() {
   # Check if battery information is available
   if [[ -z $BATTERY_PERCENTAGE || -z $BATTERY_STATE ]]; then
     BATTERY_ICON=$'\U26A0'  # Warning icon
-    BATTERY_COLOR=219  # Yellow color for warning
+    BATTERY_COLOR=207  # Yellow color for warning
     BATTERY_PERCENTAGE="No Battery"
   else
     # Choose an icon and color based on the battery percentage
