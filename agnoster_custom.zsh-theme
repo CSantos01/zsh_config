@@ -41,7 +41,7 @@ prompt_segment() {
   [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
   [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
   if [[ $CURRENT_BG != 'NONE' && $1 != $CURRENT_BG ]]; then
-    echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR_RIGHT%{$fg%} "
+    echo -n " %{$bg%F{$CURRENT_BG}%}$SEGMENT_SEPARATOR_RIGHT%{$fg%}"
   else
     echo -n "%{$bg%}%{$fg%} "
   fi
@@ -53,7 +53,7 @@ prompt_segment_left() {
   local bg fg
   [[ -n $1 ]] && bg="%K{$1}" || bg="%k"
   [[ -n $2 ]] && fg="%F{$2}" || fg="%f"
-  echo -n "%{%F{$1}%}$SEGMENT_SEPARATOR_LEFT%{$bg$fg%}"
+  echo -n "%{%F{$1}%}$SEGMENT_SEPARATOR_LEFT %{$bg$fg%} "
   [[ -n $3 ]] && echo -n $3
 }
 
@@ -225,7 +225,7 @@ prompt_battery() {
     fi
   fi
 
-  prompt_segment_left $BATTERY_COLOR $CURRENT_FG ' '$BATTERY_ICON' '$BATTERY_PERCENTAGE' '
+  prompt_segment_left $BATTERY_COLOR $CURRENT_FG $BATTERY_ICON' '$BATTERY_PERCENTAGE' '
 }
 
 # WiFi: current connection status
@@ -265,7 +265,7 @@ prompt_wifi() {
     WIFI_COLOR=$CACHED_WIFI_COLOR
   fi
 
-  prompt_segment_left $WIFI_COLOR $CURRENT_FG ' '$WIFI_ICON' '$WIFI_SSID' '
+  prompt_segment_left $WIFI_COLOR $CURRENT_FG $WIFI_ICON' '$WIFI_SSID' '
 }
 
 # Set up real-time clock update

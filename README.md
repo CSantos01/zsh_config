@@ -52,12 +52,15 @@ source ~/.zshrc
 
 1. Put the custom theme in the `~/.oh-my-zsh/custom/themes` directory.
 
-2. (*Optional*)  Install [Nerd-fonts](https://github.com/ryanoasis/nerd-fonts):
+2. Install [Nerd-fonts](https://github.com/ryanoasis/nerd-fonts):
 ```sh
 git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git
 cd nerd-fonts
 ./install.sh
 ```
+(or you can just install the font you want).
+
+3. Set the font in the terminal emulator to the custom font.
 
 ## Features
 
@@ -68,6 +71,7 @@ cd nerd-fonts
 ## Customization
 
 - Colors are taken from the `spectrum_ls` command.
+- Symbols are taken from the [Nerd-fonts cheatsheet](https://www.nerdfonts.com/cheat-sheet)
 
 ## Contributing
 
