@@ -186,6 +186,36 @@ prompt_clock() {
   prompt_segment_left 162 $CURRENT_FG $CLOCK_ICON' %*'
 }
 
+# Battery: current battery percentage
+prompt_battery() {
+  local BATTERY_ICON
+  local BATTERY_PERCENTAGE
+  local BATTERY_COLOR
+
+  # Get battery percentage (assuming a Linux system with upower)
+  BATTERY_PERCENTAGE=$(upower -i $(upower -e | grep BAT) | grep percentage | awk '{print $2}')
+
+  # Choose an icon and color based on the battery percentage
+  if [[ ${BATTERY_PERCENTAGE%?} -ge 80 ]]; then
+    BATTERY_ICON=$'\Uf0081'  # Full battery icon
+    BATTERY_COLOR=034  # Green color
+  elif [[ ${BATTERY_PERCENTAGE%?} -ge 60 ]]; then
+    BATTERY_ICON=$'\Uf007f'  # Medium battery icon
+    BATTERY_COLOR=148  # Light green color
+  elif [[ ${BATTERY_PERCENTAGE%?} -ge 40 ]]; then
+    BATTERY_ICON=$'\Uf007d'  # Medium battery icon
+    BATTERY_COLOR=217  # Yellow color
+  elif [[ ${BATTERY_PERCENTAGE%?} -ge 20 ]]; then
+    BATTERY_ICON=$'\Uf007b'  # Low battery icon
+    BATTERY_COLOR=205  # Orange color
+  else
+    BATTERY_ICON=$'\Uf0083'  # Low battery icon
+    BATTERY_COLOR=196  # Red color for low battery
+  fi
+
+  prompt_segment_left $BATTERY_COLOR $CURRENT_FG ' '$BATTERY_ICON' '$BATTERY_PERCENTAGE' '
+}
+
 # Set up real-time clock update
 TRAPALRM() {
   zle reset-prompt
@@ -207,5 +237,6 @@ PROMPT='%{%f%b%k%}$(build_prompt) '
 # Right prompt (RPROMPT)
 build_rprompt() {
   prompt_clock
+  prompt_battery
 }
 RPROMPT='%{%f%b%k%}$(build_rprompt) '
