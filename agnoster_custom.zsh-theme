@@ -233,18 +233,36 @@ prompt_wifi() {
   local WIFI_ICON
   local WIFI_SSID
   local WIFI_COLOR
+  local CURRENT_TIME
+  local TIME_INTERVAL=60
 
-  # Get WiFi SSID (assuming a Linux system with nmcli)
-  WIFI_SSID=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
+  CURRENT_TIME=$(date +%s)
 
-  # Check if WiFi is connected
-  if [[ -z $WIFI_SSID ]]; then
-    WIFI_ICON=$'\Uf05aa'  # Warning icon
-    WIFI_COLOR=199  # Yellow color for warning
-    WIFI_SSID="No WiFi"
+  # Check if the WiFi status needs to be updated
+  if [[ -z $LAST_WIFI_UPDATE || $((CURRENT_TIME - LAST_WIFI_UPDATE)) -ge $TIME_INTERVAL ]]; then
+    # Get WiFi SSID (assuming a Linux system with nmcli)
+    WIFI_SSID=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
+
+    # Check if WiFi is connected
+    if [[ -z $WIFI_SSID ]]; then
+      WIFI_ICON=$'\Uf05aa'  # Warning icon
+      WIFI_COLOR=205  # Yellow color for warning
+      WIFI_SSID="No WiFi"
+    else
+      WIFI_ICON=$'\Uf05a9'  # WiFi icon
+      WIFI_COLOR=111  # Green color for connected
+    fi
+
+    # Cache the WiFi status and update time
+    CACHED_WIFI_ICON=$WIFI_ICON
+    CACHED_WIFI_SSID=$WIFI_SSID
+    CACHED_WIFI_COLOR=$WIFI_COLOR
+    LAST_WIFI_UPDATE=$CURRENT_TIME
   else
-    WIFI_ICON=$'\Uf05a9'  # WiFi icon
-    WIFI_COLOR=111  # Green color for connected
+    # Use cached WiFi status
+    WIFI_ICON=$CACHED_WIFI_ICON
+    WIFI_SSID=$CACHED_WIFI_SSID
+    WIFI_COLOR=$CACHED_WIFI_COLOR
   fi
 
   prompt_segment_left $WIFI_COLOR $CURRENT_FG ' '$WIFI_ICON' '$WIFI_SSID' '
