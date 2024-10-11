@@ -191,12 +191,17 @@ prompt_battery() {
   local BATTERY_ICON
   local BATTERY_PERCENTAGE
   local BATTERY_COLOR
+  local BATTER_STATE
 
   # Get battery percentage (assuming a Linux system with upower)
   BATTERY_PERCENTAGE=$(upower -i $(upower -e | grep BAT) | grep percentage | awk '{print $2}')
+  BATTERY_STATE=$(upower -i $(upower -e | grep BAT) | grep state | awk '{print $2}')
 
   # Choose an icon and color based on the battery percentage
-  if [[ ${BATTERY_PERCENTAGE%?} -ge 80 ]]; then
+  if [[ $BATTERY_STATE == "charging" ]]; then
+    BATTERY_ICON=$'\Uf0084'  # Charging battery icon
+    BATTERY_COLOR=023  # Blue color for charging
+  elif [[ ${BATTERY_PERCENTAGE%?} -ge 80 ]]; then
     BATTERY_ICON=$'\Uf0081'  # Full battery icon
     BATTERY_COLOR=034  # Green color
   elif [[ ${BATTERY_PERCENTAGE%?} -ge 60 ]]; then
