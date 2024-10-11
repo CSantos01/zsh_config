@@ -234,7 +234,7 @@ prompt_wifi() {
   local WIFI_SSID
   local WIFI_COLOR
   local CURRENT_TIME
-  local TIME_INTERVAL=60
+  local TIME_INTERVAL=150
 
   CURRENT_TIME=$(date +%s)
 
