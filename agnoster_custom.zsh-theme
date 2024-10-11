@@ -197,25 +197,32 @@ prompt_battery() {
   BATTERY_PERCENTAGE=$(upower -i $(upower -e | grep BAT) | grep percentage | awk '{print $2}')
   BATTERY_STATE=$(upower -i $(upower -e | grep BAT) | grep state | awk '{print $2}')
 
-  # Choose an icon and color based on the battery percentage
-  if [[ $BATTERY_STATE == "charging" ]]; then
-    BATTERY_ICON=$'\Uf0084'  # Charging battery icon
-    BATTERY_COLOR=023  # Blue color for charging
-  elif [[ ${BATTERY_PERCENTAGE%?} -ge 80 ]]; then
-    BATTERY_ICON=$'\Uf0081'  # Full battery icon
-    BATTERY_COLOR=034  # Green color
-  elif [[ ${BATTERY_PERCENTAGE%?} -ge 60 ]]; then
-    BATTERY_ICON=$'\Uf007f'  # Medium battery icon
-    BATTERY_COLOR=148  # Light green color
-  elif [[ ${BATTERY_PERCENTAGE%?} -ge 40 ]]; then
-    BATTERY_ICON=$'\Uf007d'  # Medium battery icon
-    BATTERY_COLOR=217  # Yellow color
-  elif [[ ${BATTERY_PERCENTAGE%?} -ge 20 ]]; then
-    BATTERY_ICON=$'\Uf007b'  # Low battery icon
-    BATTERY_COLOR=205  # Orange color
+  # Check if battery information is available
+  if [[ -z $BATTERY_PERCENTAGE || -z $BATTERY_STATE ]]; then
+    BATTERY_ICON=$'\U26A0'  # Warning icon
+    BATTERY_COLOR=219  # Yellow color for warning
+    BATTERY_PERCENTAGE="No Battery"
   else
-    BATTERY_ICON=$'\Uf0083'  # Low battery icon
-    BATTERY_COLOR=196  # Red color for low battery
+    # Choose an icon and color based on the battery percentage
+    if [[ $BATTERY_STATE == "charging" ]]; then
+      BATTERY_ICON=$'\Uf0084'  # Charging battery icon
+      BATTERY_COLOR=023  # Blue color for charging
+    elif [[ ${BATTERY_PERCENTAGE%?} -ge 80 ]]; then
+      BATTERY_ICON=$'\Uf0081'  # Full battery icon
+      BATTERY_COLOR=034  # Green color
+    elif [[ ${BATTERY_PERCENTAGE%?} -ge 60 ]]; then
+      BATTERY_ICON=$'\Uf007f'  # Medium battery icon
+      BATTERY_COLOR=148  # Light green color
+    elif [[ ${BATTERY_PERCENTAGE%?} -ge 40 ]]; then
+      BATTERY_ICON=$'\Uf007d'  # Medium battery icon
+      BATTERY_COLOR=214  # Yellow color
+    elif [[ ${BATTERY_PERCENTAGE%?} -ge 20 ]]; then
+      BATTERY_ICON=$'\Uf007b'  # Low battery icon
+      BATTERY_COLOR=205  # Orange color
+    else
+      BATTERY_ICON=$'\Uf0083'  # Low battery icon
+      BATTERY_COLOR=196  # Red color for low battery
+    fi
   fi
 
   prompt_segment_left $BATTERY_COLOR $CURRENT_FG ' '$BATTERY_ICON' '$BATTERY_PERCENTAGE' '
