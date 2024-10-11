@@ -228,6 +228,28 @@ prompt_battery() {
   prompt_segment_left $BATTERY_COLOR $CURRENT_FG ' '$BATTERY_ICON' '$BATTERY_PERCENTAGE' '
 }
 
+# WiFi: current connection status
+prompt_wifi() {
+  local WIFI_ICON
+  local WIFI_SSID
+  local WIFI_COLOR
+
+  # Get WiFi SSID (assuming a Linux system with nmcli)
+  WIFI_SSID=$(nmcli -t -f active,ssid dev wifi | grep '^yes' | cut -d: -f2)
+
+  # Check if WiFi is connected
+  if [[ -z $WIFI_SSID ]]; then
+    WIFI_ICON=$'\Uf05aa'  # Warning icon
+    WIFI_COLOR=199  # Yellow color for warning
+    WIFI_SSID="No WiFi"
+  else
+    WIFI_ICON=$'\Uf05a9'  # WiFi icon
+    WIFI_COLOR=111  # Green color for connected
+  fi
+
+  prompt_segment_left $WIFI_COLOR $CURRENT_FG ' '$WIFI_ICON' '$WIFI_SSID' '
+}
+
 # Set up real-time clock update
 TRAPALRM() {
   zle reset-prompt
@@ -250,5 +272,6 @@ PROMPT='%{%f%b%k%}$(build_prompt) '
 build_rprompt() {
   prompt_clock
   prompt_battery
+  prompt_wifi
 }
 RPROMPT='%{%f%b%k%}$(build_rprompt) '
