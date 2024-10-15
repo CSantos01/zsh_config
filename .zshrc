@@ -10,6 +10,9 @@ export ZSH="$HOME/.oh-my-zsh"
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="agnoster_custom"
 
+# Change language to English
+export LANG=en_US.UTF-8
+
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -70,7 +73,7 @@ ZSH_THEME="agnoster_custom"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git vscode python)
+plugins=(git vscode python aliases)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -118,3 +121,7 @@ awk -v idx="$random_index" 'BEGIN{RS="THISISATOKEN"} NR==idx {print; exit}' ".ba
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias zotero='/home/csantos/Downloads/Zotero-6.0.27_linux-x86_64/Zotero_linux-x86_64/zotero &'
 alias r='source activate r'
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
