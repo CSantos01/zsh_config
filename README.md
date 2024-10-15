@@ -52,6 +52,8 @@ source ~/.zshrc
 
 1. Put the custom theme in the `~/.oh-my-zsh/custom/themes` directory.
 
+### To do only once in your terminal:
+
 2. Install [Nerd-fonts](https://github.com/ryanoasis/nerd-fonts):
 ```sh
 git clone --depth 1 https://github.com/ryanoasis/nerd-fonts.git
